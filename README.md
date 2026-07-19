@@ -1,66 +1,104 @@
-# integracao-api
+# Integração API Dados Abertos - DEMAS (SUS)
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Microsserviço desenvolvido em **Java 21** e **Quarkus** para consumir e expor de forma amigável os dados do Portal de Dados Abertos do Ministério da Saúde. O projeto realiza a conversão automática de siglas de Estados (UFs) para códigos numéricos do IBGE e padroniza as respostas de erro da API do governo.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+---
 
-## Running the application in dev mode
+## 🚀 Como Rodar o Projeto Localmente
 
-You can run your application in dev mode that enables live coding using:
+### Pré-requisitos
+* Java 21 instalado
+* Maven instalado (ou use o `./mvnw` incluído no projeto)
+* Docker instalado (opcional)
 
-```shell script
-./mvnw quarkus:dev
+### Modo de Desenvolvimento (Live Coding)
+Para iniciar a aplicação localmente com suporte a recarregamento automático de código, execute:
+```bash
+mvn quarkus:dev
+```
+A API estará disponível em: `http://localhost:8080`
+
+### Rodando via Docker (JVM Mode)
+Para compilar e subir a aplicação dentro de um container isolado:
+```bash
+# 1. Construir a imagem Docker
+docker build -t fiap/integracao-api:latest .
+
+# 2. Executar o container exposto na porta 8080
+docker run -i --rm -p 8080:8080 fiap/integracao-api:latest
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+---
 
-## Packaging and running the application
+## 🛣️ Endpoints da API
 
-The application can be packaged using:
+O projeto está configurado para receber e responder dados utilizando o padrão **`snake_case`** globalmente nas propriedades do JSON de saída. No entanto, as rotas locais de entrada aceitam as propriedades em **`camelCase`**.
 
-```shell script
-./mvnw package
+### 1. Consultar Estoque de Medicamentos (Hórus/BNAFAR)
+Busca a posição e o lote de medicamentos distribuídos na rede pública com base em filtros. Os campos não utilizados podem ser omitidos ou passados como `null`.
+
+* **Método:** `POST`
+* **Rota:** `/estoque-medicamentos/consultar`
+* **Headers:** `Content-Type: application/json`
+* **Payload Completo de Requisição:**
+```json
+{
+  "limit": 2,
+  "offset": 0,
+  "uf": "PR",
+  "codigoMunicipio": "410000",
+  "codigoCnes": "8003041",
+  "anomesPosicaoEstoque": 202607,
+  "dataPosicaoEstoque": "2026-07-17",
+  "codigoCatmat": "BR0606841U0042",
+  "siglaProgramaSaude": "TB",
+  "tipoProduto": "S",
+  "siglaSistemaOrigem": "SI_BNAFAR"
+}
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+### 2. Consultar Estabelecimentos de Saúde (CNES)
+Lista os hospitais, clínicas e postos de saúde cadastrados de acordo com os critérios informados.
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+* **Método:** `POST`
+* **Rota:** `/estabelecimento/consultar`
+* **Headers:** `Content-Type: application/json`
+* **Payload Completo de Requisição:**
+```json
+{
+  "limit": 5,
+  "offset": 0,
+  "uf": "SP",
+  "codigoMunicipio": 355030,
+  "codigoTipoUnidade": 22,
+  "status": 1,
+  "estabelecimentoPossuiCentroCirurgico": 0,
+  "estabelecimentoPossuiCentroObstetrico": 0,
+  "dataAtualizacao": "2025-09-03"
+}
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+### 3. Buscar Estabelecimento por Código CNES Único
+Recupera a ficha completa e detalhada de um estabelecimento específico do SUS diretamente pela URL.
 
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
+* **Método:** `GET`
+* **Rota:** `/estabelecimento/consultar/{codigo_cnes}`
+* **Exemplo de Chamada:**
+```text
+GET http://localhost:8080/estabelecimento/consultar/9629866
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+---
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+## 🛠️ Tratamento de Erros e Validações
+
+A aplicação conta com um gerenciador global de exceções (`ExceptionMapper`). Se você enviar uma sigla de estado inválida ou se a API do governo falhar, você receberá um retorno padronizado com o status HTTP correspondente.
+
+**Exemplo de erro ao enviar uma UF inexistente (`"uf": "XX"`):**
+```json
+{
+  "mensagem": "Sigla de UF inválida: XX",
+  "status": 400,
+  "timestamp": "2026-07-19T19:40:12"
+}
 ```
-
-You can then execute your native executable with: `./target/integracao-api-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST Client ([guide](https://quarkus.io/guides/rest-client)): Type-safe HTTP client for consuming REST APIs using MicroProfile REST Client
-
-## Provided Code
-
-### REST Client
-
-Invoke different services through REST with JSON
-
-[Related guide section...](https://quarkus.io/guides/rest-client)
