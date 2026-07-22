@@ -95,7 +95,7 @@ Payload de exemplo:
 {
   "agregador": 4277,
   "variavel": 11754,
-  "ano": 2023,
+  "ano": [2023],
   "nivelGeografico": "N3",
   "localidades": ["13"],
   "sexo": [6794],
