@@ -1,4 +1,4 @@
-package br.com.fiap.dtos;
+package br.com.fiap.dtos.erro;
 
 import java.time.LocalDateTime;
 

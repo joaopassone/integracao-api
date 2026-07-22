@@ -2,8 +2,8 @@ package br.com.fiap.controllers;
 
 import java.util.List;
 
-import br.com.fiap.dtos.EstoqueMedicamentosDTO;
-import br.com.fiap.dtos.EstoqueMedicamentosFiltroDTO;
+import br.com.fiap.dtos.estoquemedicamentos.EstoqueMedicamentosDTO;
+import br.com.fiap.dtos.estoquemedicamentos.EstoqueMedicamentosFiltroDTO;
 import br.com.fiap.services.DadosAbertosService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;

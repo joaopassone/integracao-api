@@ -2,8 +2,8 @@ package br.com.fiap.controllers;
 
 import java.util.List;
 
-import br.com.fiap.dtos.EstabelecimentoDTO;
-import br.com.fiap.dtos.EstabelecimentoFiltroDTO;
+import br.com.fiap.dtos.estabelecimento.EstabelecimentoDTO;
+import br.com.fiap.dtos.estabelecimento.EstabelecimentoFiltroDTO;
 import br.com.fiap.services.DadosAbertosService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;

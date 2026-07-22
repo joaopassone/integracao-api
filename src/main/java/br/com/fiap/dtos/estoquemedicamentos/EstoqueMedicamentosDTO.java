@@ -1,4 +1,4 @@
-package br.com.fiap.dtos;
+package br.com.fiap.dtos.estoquemedicamentos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

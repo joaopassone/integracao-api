@@ -2,7 +2,7 @@ package br.com.fiap.clients;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import br.com.fiap.dtos.EstabelecimentoDTO;
+import br.com.fiap.dtos.estabelecimento.EstabelecimentoDTO;
 import br.com.fiap.responses.EstabelecimentoResponse;
 import br.com.fiap.responses.EstoqueMedicamentosResponse;
 import jakarta.ws.rs.GET;

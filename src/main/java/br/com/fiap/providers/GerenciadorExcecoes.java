@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
-import br.com.fiap.dtos.ErroRespostaDTO;
+import br.com.fiap.dtos.erro.ErroRespostaDTO;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;

@@ -1,4 +1,4 @@
-package br.com.fiap.dtos;
+package br.com.fiap.dtos.estabelecimento;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

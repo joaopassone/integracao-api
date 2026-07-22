@@ -10,10 +10,10 @@ import java.util.List;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import br.com.fiap.clients.DadosAbertosClient;
-import br.com.fiap.dtos.EstabelecimentoDTO;
-import br.com.fiap.dtos.EstabelecimentoFiltroDTO;
-import br.com.fiap.dtos.EstoqueMedicamentosDTO;
-import br.com.fiap.dtos.EstoqueMedicamentosFiltroDTO;
+import br.com.fiap.dtos.estabelecimento.EstabelecimentoDTO;
+import br.com.fiap.dtos.estabelecimento.EstabelecimentoFiltroDTO;
+import br.com.fiap.dtos.estoquemedicamentos.EstoqueMedicamentosDTO;
+import br.com.fiap.dtos.estoquemedicamentos.EstoqueMedicamentosFiltroDTO;
 import br.com.fiap.enums.EstadoUF;
 import br.com.fiap.responses.EstabelecimentoResponse;
 import br.com.fiap.responses.EstoqueMedicamentosResponse;
