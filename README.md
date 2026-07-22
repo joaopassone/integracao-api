@@ -88,6 +88,22 @@ Recupera a ficha completa e detalhada de um estabelecimento específico do SUS d
 GET http://localhost:8080/estabelecimento/consultar/9629866
 ```
 
+### 4. Consultar IBGE/SIDRA (`POST` /ibge/pesquisa)
+Busca indicadores (ex: AVC/Hipertensão) da PNS.
+Payload de exemplo:
+```json
+{
+  "agregador": 4277,
+  "variavel": 11754,
+  "ano": 2023,
+  "nivelGeografico": "N3",
+  "localidades": ["13"],
+  "sexo": [6794],
+  "grupoIDades": [6795],
+  "domicilios": [65445, 1]
+}
+```
+
 ---
 
 ## 🛠️ Tratamento de Erros e Validações
